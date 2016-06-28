@@ -1,5 +1,9 @@
 #!/bin/sh
 
+touch /tmp/money.json
+echo '{"@timestamp":"2014-01-14", "category_name":"食費", "genre_name":"昼ご飯", "place":"社食", "comment":"", "amount":500, "from_account_name":"夫の財布"}' >> /tmp/money.json
+echo '{"@timestamp":"2016-01-02", "category_name":"エンタメ", "genre_name":"書籍", "place":"技術評論社", "comment":"サーバ／インフラエンジニア養成読本 ログ収集〜可視化編", "amount":1980, "from_account_name”:"夫の財布"}' >> /tmp/money.json
+echo '{"@timestamp":"2016-01-02", "category_name":"交通", "genre_name":"電車", "place":"新幹線", "comment":"帰省のため", "amount":13000, "from_account_name":"共有の財布"}' >> /tmp/money.json
 
 tee /etc/td-agent/td-agent.conf <<-EOF
 <source>
@@ -18,6 +22,7 @@ tee /etc/td-agent/td-agent.conf <<-EOF
 </match>
 EOF
 
+/etc/init.d/td-agent restart
 
 curl -XPUT http://localhost:9200/zaim-money -d '
 {
@@ -56,19 +61,4 @@ curl -XPUT http://localhost:9200/zaim-money -d '
 }
 '
 
-
-touch /tmp/money.json
-echo '{"@timestamp":"2014-01-14", "category_name":"食費", "genre_name":"昼ご飯", "place":"社食", "comment":"", "amount":500, "from_account_name":"夫の財布"}' >> /tmp/money.json
-echo '{"@timestamp":"2016-01-02", "category_name":"エンタメ", "genre_name":"書籍", "place":"技術評論社", "comment":"サーバ／インフラエンジニア養成読本 ログ収集〜可視化編", "amount":1980, "from_account_name”:"夫の財布"}' >> /tmp/money.json
-echo '{"@timestamp":"2016-01-02", "category_name":"交通", "genre_name":"電車", "place":"新幹線", "comment":"帰省のため", "amount":13000, "from_account_name":"共有の財布"}' >> /tmp/money.json
-
-tail /var/log/td-agent/td-agent.log
-
-
-
-
-
-
-
-
-
+#tail /var/log/td-agent/td-agent.log

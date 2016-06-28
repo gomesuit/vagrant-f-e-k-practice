@@ -7,8 +7,6 @@ curl -L https://toolbelt.treasuredata.com/sh/install-redhat-td-agent2.sh | sh
 
 #/etc/init.d/td-agent start
 
-
-
 tee /etc/td-agent/td-agent.conf <<-EOF
 <source>
   type forward
@@ -19,3 +17,5 @@ tee /etc/td-agent/td-agent.conf <<-EOF
   type stdout
 </match>
 EOF
+
+/etc/init.d/td-agent start
