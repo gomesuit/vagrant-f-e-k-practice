@@ -15,6 +15,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.hostname = _HOSTNAME
     host.vm.network "private_network", ip: _PRIVATE_IP_ADDRESS
     host.vm.provision :shell, path: "stop-security.sh"
+    host.vm.provision :shell, path: "install-fluentd.sh"
+    host.vm.provision :shell, path: "install-elasticsearch.sh"
+    host.vm.provision :shell, path: "install-kibana.sh"
+    host.vm.provision :shell, path: "sample-data.sh"
   end
 
 end
