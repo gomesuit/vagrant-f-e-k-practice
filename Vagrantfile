@@ -1,12 +1,21 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+$script = <<SCRIPT
+sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+systemctl restart sshd
+ifdown eth1
+ifup eth1
+SCRIPT
+
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.synced_folder ".", "/home/vagrant/sync", disabled: true
+  config.vm.synced_folder ".", "/vagrant", disabled: true
 
   config.vm.box = "centos/7"
+  config.ssh.insert_key = false
+  config.vm.provision :shell, inline: $script
 
   config.vm.define :server do |host|
     _HOSTNAME = "server"

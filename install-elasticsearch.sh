@@ -22,7 +22,7 @@ echo "network.host: 0.0.0.0" >> /etc/elasticsearch/elasticsearch.yml
 systemctl enable elasticsearch
 systemctl start elasticsearch
 
-sleep 10
+sleep 20
 
 curl -XPOST http://localhost:9200/sample_index
 
